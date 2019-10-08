@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api:
+    image: "clojure:lein-2.8.1-alpine"
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    command: "lein ring server-headless"
+    depends_on:
+      - postgres
+  postgres:
+    container_name: database
+    image: "postgres:10-alpine"
+    environment:
+      - "POSTGRES_DB=teste_jdbc"
+    ports:
+      - "5432:5432"
